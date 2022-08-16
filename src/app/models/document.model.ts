@@ -10,8 +10,8 @@ export interface DocumentModel {
     allowDelete: boolean;
     check: boolean;
     userId: string;
-    userCode: string;
-    userFullName: string;
-    nextStt: number;
+    userCode: string;//
+    userFullName: string;//
+    nextStt: number;//
     title: string;
 }

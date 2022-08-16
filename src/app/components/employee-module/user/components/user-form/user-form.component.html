@@ -84,7 +84,7 @@
                             <!-- department -->
                             <div class="field col-12 md:col-6 flex flex-column">
                                 <label htmlFor="departmentId" [translate]="'label.department'"></label>
-                                <p-dropdown id="departmentId" [options]="departments" [optionLabel]="'name'" [optionValue]="'id'"
+                                <p-dropdown  [options]="departments" [optionLabel]="'name'" [optionValue]="'id'"
                                     [(ngModel)]="userForm.value.departmentId" [formControlName]="'departmentId'"
                                     [placeholder]="'label.empty' | translate" [ngClass]="checkValidValidator('departmentId')"
                                     [filter]="true" filterBy="name"></p-dropdown>

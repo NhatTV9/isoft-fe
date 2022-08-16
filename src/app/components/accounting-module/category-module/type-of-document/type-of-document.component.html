@@ -1,7 +1,116 @@
-<div class="grid">
+<div *ngIf="!display" class="grid">
     <div class="col-12">
         <div class="card card-table">
-            <p>type of document works</p>
+            <h5 [translate]="'label.document_management'"></h5>
+            <p-table #dt [value]="lstLicense"  dataKey="id" [rows]="5" [loading]="loading" [rowHover]="true" 
+            styleClass="p-datatable-customers" [paginator]="true"   
+            [totalRecords]="totalRecords" [rowsPerPageOptions]="[5,10,25,50]" [showCurrentPageReport]="true" 
+            responsiveLayout="scroll" [lazy]="true" (onLazyLoad)="getdocument()"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(first)]="first">
+
+            <ng-template pTemplate="caption">
+                <div class="flex justify-content-start md:justify-content-between flex-column md:flex-row">
+                    <div class="flex justify-content-start md:justify-content-start mt-2 md:mt-0">
+                        <button pButton [label]="'button.add' | translate" class="mb-2" icon="pi pi-user-plus" (click)="isEdit = false; showDialog()"></button>
+                    </div>
+                    <span class="p-input-icon-left mb-2">
+                        <i class="pi pi-search"></i>
+                        <input #filter [(ngModel)]="getParams.searchText" pInputText type="text" (keypress)="onSearch($event)"
+                            [placeholder]="'label.search' | translate" class="w-full" />
+                    </span>
+                </div>
+            </ng-template>
+            
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:80px">
+                        <div class="flex align-items-center">
+                            <span [translate]="'label.stt'"></span>
+                        </div>
+                    </th>
+                    
+                    <th style="width:100px">
+                        <div class="flex align-items-center">
+                            <span [translate]="'label.document_code'"></span>
+                        </div>
+                    </th>
+                    <th style="width:200px">
+                        <div class="flex justify-content-between align-items-center">
+                            <span [translate]="'label.document_name'"></span>
+                        </div>
+                    </th>
+                    <th style="width:200px">
+                        <div class="flex justify-content-between align-items-center">
+                            <span [translate]="'label.account_credit'"></span>
+                        </div>
+                    </th>
+                    <th style="width:200px">
+                        <div class="flex justify-content-between align-items-center">
+                            <span [translate]="'label.account_debit'"></span>
+                        </div>
+                    </th>
+                    <th style="width:200px">
+                        <div class="flex justify-content-between align-items-center">
+                            <span [translate]="'label.user'"></span>
+                        </div>
+                    </th>
+                    <th *ngIf="isMobile"></th>
+                    <th *ngIf="!isMobile" style="width:200px" alignFrozen="right" pFrozenColumn [frozen]="true"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-document>
+                <tr>
+                    <td style="width:80px">
+                        <span class="p-column-title" [translate]="'label.number_order'"></span>{{ document.stt }}
+                    </td>
+                    <td style="width:100px">
+                        <span class="p-column-title" [translate]="'label.code'"></span>{{ document.code }}
+                    </td>
+                    <td style="width:200px">
+                        <span class="p-column-title" [translate]="'label.name'"></span>{{ document.name }}
+                    </td>
+                    <td style="width:200px">
+                        <span class="p-column-title" [translate]="'label.debitCode'"></span>{{ document.debitCode }} - {{document.nameDebitCode}}
+                    </td>
+                    <td style="width:200px">
+                        <span class="p-column-title" [translate]="'label.debitCode'"></span>{{ document.creditCode }} - {{document.nameCreditCode}}
+                    </td>
+                    <td style="width:200px">
+                        <span class="p-column-title" [translate]="'label.debitCode'"></span>{{ document.userCode }} - {{document.userFullName}}
+                    </td>
+                    <td *ngIf="isMobile">
+                        <button pButton class="p-button-warning mr-3" icon="pi pi-pencil" (click)="getDetail(document.id)"></button>
+                        <button pButton class="p-button-danger" icon="pi pi-trash" (click)="onDelete(document.id)"></button>
+                    </td>
+                    <td *ngIf="!isMobile" style="width:200px" alignFrozen="right" pFrozenColumn [frozen]="true"
+                            class="flex justify-content-start md:justify-content-center">
+                        <button pButton class="p-button-warning mr-3" icon="pi pi-pencil" (click)="getDetail(document.id)"></button>
+                        <button *ngIf="!document.allowDelete" pButton class="p-button-danger" icon="pi pi-trash" (click)="onDelete(document.id)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td class="w-full pt-4 pb-4">No user found.</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td class="w-full pt-4 pb-4">Loading user data. Please wait.</td>
+                </tr>
+            </ng-template>
+        </p-table>
         </div>
     </div>
+   
 </div>
+<app-document-form *ngIf="display" [formData]="formData" [display]="display" (onCancel)="display = false" [nextStt]="nextStt" [isEdit]="isEdit" ></app-document-form>
+<p-confirmDialog #cd icon="pi pi-exclamation-triangle" [style]="{'min-width': '45vw'}">
+    <ng-template pTemplate="header">
+        <h4 class="m-0 text-white" [translate]="'question.delete_user_header'"></h4>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" [label]="'button.back' | translate" (click)="cd.reject()"></button>
+        <button class="p-button-danger" type="button" pButton icon="pi pi-check" [label]="'button.remove' | translate" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

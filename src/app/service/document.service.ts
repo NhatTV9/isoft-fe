@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { ChartOfAccount } from '../models/case.model';
 import { Page, TypeData } from '../models/common.model';
 import { DocumentModel } from '../models/document.model';
 import AppConstant from '../utilities/app-constants';
@@ -31,8 +32,8 @@ export class DocumentService {
     }
 
     public getDocumentWithID(id: number): Observable<DocumentModel> {
-        const url: string = this._baseUrl + `/documents/${id}`;
-        return this.httpClient.post(url, {}).pipe(
+        const url: string = this._baseUrl + `/Documents/${id}`;
+        return this.httpClient.get(url, {}).pipe(
             map((document: DocumentModel) => {
                 return document;
             })
@@ -42,7 +43,7 @@ export class DocumentService {
     public createDocument(
         document: DocumentModel
     ): Observable<DocumentModel | null> {
-        const url: string = this._baseUrl + '/Documents/save';
+        const url: string = this._baseUrl + '/Documents/Save';
         return this.httpClient.post(url, document).pipe(
             map((document: DocumentModel) => {
                 return document;
@@ -54,7 +55,7 @@ export class DocumentService {
         id: number,
         document: DocumentModel
     ): Observable<DocumentModel> {
-        const url: string = this._baseUrl + `/documents/save/${id}`;
+        const url: string = this._baseUrl + `/documents/Save/${id}`;
         return this.httpClient.post(url, document).pipe(
             map((document: DocumentModel) => {
                 return document;
@@ -63,9 +64,25 @@ export class DocumentService {
     }
 
     public deleteDocument(id: number): Observable<DocumentModel | null> {
-        const url: string = this._baseUrl + `/documents/delete/${id}`;
-        return this.httpClient.post(url, {}).pipe(
+        const url: string = this._baseUrl + `/Documents/${id}`;
+        return this.httpClient.delete(url, {}).pipe(
             map((document: DocumentModel) => {
+                return document;
+            })
+        );
+    }
+    public getAllByDisplayInsert(): Observable<TypeData<ChartOfAccount>> {
+        const url: string = this._baseUrl + `/ChartOfAccounts/getAllByDisplayInsert`;
+        return this.httpClient.get(url, {}).pipe(
+            map((document: TypeData<ChartOfAccount>) => {
+                return document;
+            })
+        );
+    }
+    public getAllUserActive(): Observable<TypeData<DocumentModel>> {
+        const url: string = this._baseUrl + `/Users/getAllUserActive`;
+        return this.httpClient.get(url, {}).pipe(
+            map((document: TypeData<DocumentModel>) => {
                 return document;
             })
         );

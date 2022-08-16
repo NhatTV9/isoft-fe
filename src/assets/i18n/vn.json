@@ -318,7 +318,19 @@
         "floor": "Lầu/Phòng",
         "workflow_management": "Quản lý công việc",
         "workflow_edit": "Chỉnh sửa công việc",
-        "workflow_add": "Thêm mới công việc"
+        "workflow_add": "Thêm mới công việc",
+        "document_management": "Loại chứng từ",
+        "stt": "STT",
+        "document_code": "Mã CT",
+        "document_name": "Tên chứng từ",
+        "document_credit": "TK nợ",
+        "document_debit": "TK có",
+        "user": "Quản lý",
+        "account_debit": "Tài khoản có",
+        "account_credit": "Tài khoản nợ",
+        "heading": "Title",
+        "manager": "Quản lý",
+        "select": "Chọn"
     },
     "button": {
         "sign_in": "Đăng nhập",
@@ -348,6 +360,8 @@
     "question": {
         "delete_user_header": "Xóa nhân sự",
         "delete_user_content": "Bạn có chắc chắn muốn xóa nhân sự này?",
+        "delete_document_header": "Xóa chứng từ",
+        "delete_document_content": "Bạn có chắc chắn muốn xóa chứng từ này?",
         "delete_department_header": "Xóa phòng ban",
         "delete_department_content": "Bạn có chắc chắn muốn xóa phòng ban này?",
         "delete_branch_header": "Xóa chi nhánh",

@@ -242,6 +242,7 @@ import {DragDropModule} from "primeng/dragdrop";
 import {FullCalendarModule} from "@fullcalendar/angular";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { DocumentFormComponent } from './components/accounting-module/category-module/type-of-document/components/document-form/document-form.component';
 
 export function createTranslateLoader(http: HttpBackend) {
     return new TranslateHttpLoader(
@@ -486,6 +487,7 @@ FullCalendarModule.registerPlugins([
         IsTableComponent,
         AddLedgerComponent,
         TextGoFormComponent,
+        DocumentFormComponent,
     ],
     providers: [
         // { provide: LocationStrategy, useClass: HashLocationStrategy },

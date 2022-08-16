@@ -1,0 +1,109 @@
+<p-toast></p-toast>
+<form  class="w-12" [formGroup]="documentForm" autocomplete="off">
+    <div class="p-0 md:p-4 card grid">
+        <div class="col-12 p-5">
+            <p-accordion>
+                
+                <div class="grid w-full ">
+                    <!-- stt -->
+                    <div class="col-12 md:col-6 flex flex-row align-items-center">
+                        <div class="field col-3 ">
+                            <label htmlFor="code" [translate]="'label.stt'"></label>
+                        </div>
+                        <div class="col-9">
+                            <p-inputNumber class="w-full" mode="decimal" id="stt" [showButtons]="true" inputId="minmax-buttons" [(ngModel)]="documentForm.value.stt" [min]="1"  formControlName="stt"> </p-inputNumber>
+                            <small *ngIf="checkValidValidator('stt')" class="p-error"
+                                [innerHTML]="'info.stt' | translate"></small>
+
+                        </div>
+                    </div>
+                    <!-- code -->
+                    <div class="col-12 md:col-6 flex flex-row align-items-center">
+                        <div class="field col-3 ">
+                            <label htmlFor="code" [translate]="'label.document_code'"></label>
+                        </div>
+                        <div class="col-9">
+                            <input pInputText class="w-full" id="code" [(ngModel)]="documentForm.value.code" formControlName="code"
+                                    [ngClass]="checkValidValidator('code')"  placeholder="{{ 'label.document_code' | translate }}"/>
+                            <small *ngIf="checkValidValidator('code')" class="p-error"
+                                [innerHTML]="'info.code' | translate"></small>
+                        </div>
+                    </div>
+                    <!-- name -->
+                    <div class="col-12 md:col-6 flex flex-row align-items-center">
+                        <div class="field col-3 ">
+                            <label htmlFor="name" [translate]="'label.document_name'"></label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" class="w-full" pInputText [(ngModel)]="documentForm.value.name" formControlName="name" placeholder="{{ 'label.document_name' | translate }}"/> 
+                            <small *ngIf="checkValidValidator('name')" class="p-error"
+                            [innerHTML]="'info.name' | translate"></small>
+                        </div>
+                    </div>
+                    <!-- nameCreditCode -->
+                    <div class="col-12 md:col-6 flex flex-row align-items-center">
+                        <div class="field col-3 ">
+                            <label htmlFor="nameCreditCode" [translate]="'label.account_credit'"></label>
+                        </div>
+                        <div class="col-9">
+                            <p-dropdown id="nameCreditCode" [options]="accountDebit" [(ngModel)]="documentForm.value.nameCreditCode"  [optionValue]="'id'"   formControlName="nameCreditCode" placeholder="{{ 'label.select' | translate }}" optionLabel="name" [showClear]="true"></p-dropdown>
+                            <small *ngIf="checkValidValidator('nameCreditCode')" class="p-error"
+                            [innerHTML]="'info.accountDebit' | translate"></small>
+                        </div>
+                    </div>
+                    
+                    <!-- TK co -->
+                    <div class="col-12 md:col-6 flex flex-row align-items-center">
+                        <div class="field col-3 ">
+                            <label htmlFor="nameDebitCode" [translate]="'label.account_debit'"></label>
+                        </div>
+                        <div class="col-9">
+                            <p-dropdown id="nameDebitCode" [options]="accountDebit" [(ngModel)]="documentForm.value.nameDebitCode" optionLabel="name" [optionValue]="'id'" formControlName="nameDebitCode" placeholder="{{ 'label.select' | translate }}" [showClear]="true" ></p-dropdown>
+                            <!-- <input type="text" class="w-full" pInputText [(ngModel)]="documentForm.value.nameDebitCode" formControlName="nameDebitCode" placeholder="{{ 'label.select' | translate }}"/>  -->
+                            <small *ngIf="checkValidValidator('nameDebitCode')" class="p-error"
+                            [innerHTML]="'info.accountDebit' | translate"></small>
+                        </div>
+                    </div>
+                    <!-- quan ly -->
+                    <div class="col-12 md:col-6 flex flex-row align-items-center">
+                        <div class="p-field-checkbox field col-3  align-items-center">
+                            <p-checkbox [(ngModel)]="documentForm.value.check" binary="true" inputId="binary" (onChange)="isChooseManager()" formControlName="check"></p-checkbox>
+                            <label htmlFor="check" [translate]="'label.manager'" class="pl-3 my-0"></label>
+                        </div>
+                        <div class="col-9" *ngIf="documentForm.value.check">
+                            <p-dropdown id="userFullName" [options]="management" [(ngModel)]="documentForm.value.userFullName"   formControlName="userFullName" placeholder="{{ 'label.select' | translate }}" [optionLabel]="'username'" [showClear]="true" [ngClass]="checkValidValidator('userFullName')"></p-dropdown>
+                            <!-- <input type="text" class="w-full" pInputText [(ngModel)]="documentForm.value.userFullName" formControlName="userFullName" placeholder="{{ 'label.select' | translate }}"/>  -->
+                            <small *ngIf="checkValidValidator('userFullName')" class="p-error"
+                            [innerHTML]="'info.management' | translate"></small>
+                                <small *ngIf="checkValidValidator('userFullName')" class="p-error"
+                                    [innerHTML]="'info.management' | translate"></small>
+                        </div>
+                    </div>
+                    <!-- Heading -->
+        
+                    <div class="col-12 md:col-6 flex flex-row align-items-center">
+                        <div class="field col-3 ">
+                            <label htmlFor="title" [translate]="'label.heading'"></label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" class="w-full" pInputText [(ngModel)]="documentForm.value.title" formControlName="title" placeholder="{{ 'label.heading' | translate }}"/> 
+                            <small *ngIf="checkValidValidator('title')" class="p-error"
+                            [innerHTML]="'info.title' | translate"></small>
+                        </div>
+                    </div>
+
+                </div>
+              
+            </p-accordion>
+        </div>
+        <div class="col-12 p-5">
+            <div class="p-fluid p-formgrid grid mt-2">
+                <div class="field col-12 gap-8 flex justify-content-end mt-4">
+                    <p-button icon="pi pi-times"  [label]="'button.back' | translate"
+                        styleClass="p-button-outlined" (click)="onCancel.emit({})"></p-button>
+                    <p-button icon="pi pi-check" [label]="'button.save' | translate" (click)="Subimt()"></p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
